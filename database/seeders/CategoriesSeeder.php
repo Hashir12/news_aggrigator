@@ -21,6 +21,9 @@ class CategoriesSeeder extends Seeder
                 'Natural Disasters',
                 'Humanitarian Issues',
                 'United Nations',
+                "Local News",
+                "National News",
+                "Breaking News",
             ],
             'National News' => [
                 'Government & Politics',
