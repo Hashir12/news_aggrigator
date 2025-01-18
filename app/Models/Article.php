@@ -10,12 +10,12 @@ class Article extends Model
 {
     protected $fillable = [
         'name',
-        'reporter',
         'description',
         'news_link',
         'img_link',
         'published_at',
-        'source_id'
+        'source_id',
+        'author_id'
     ];
     protected function casts(): array
     {
@@ -32,5 +32,10 @@ class Article extends Model
     public function source(): BelongsTo
     {
         return $this->belongsTo(NewsSource::class);
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
     }
 }

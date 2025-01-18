@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\Author;
 use App\Models\Source;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -21,6 +22,18 @@ abstract class BaseService
     {
         return !$articleSourceName || Str::contains($articleSourceName, 'Removed') || !preg_match('/^(https:\/\/.+?)\//', $articleUrl);
     }
+
+    private function getAuthorId($authorName) {
+        $author = Author::where('name',$authorName)->first();
+
+        if (!$author) {
+            $author = new Author();
+            $author->name = $authorName;
+            $author->save();
+        }
+        return $author->id;
+    }
+
     public function saveNewsData($category) {
         $newsData = $this->fetchNewsData($category);
         $newsArticles = $this->getNewsArticles($newsData);
@@ -46,19 +59,21 @@ abstract class BaseService
 
             $article = Article::where('news_link',$articleUrl)->first();
             if (!$article) {
+                $authorName = $this->getArticleAuthorName($newsArticle);
+                $author_id = $this->getAuthorId($authorName);
+
                 $articleData = [
                     'name' => $this->getArticleTitleName($newsArticle),
-                    'reporter' => $this->getArticleAuthorName($newsArticle),
                     'description' => $this->getArticleDescription($newsArticle),
                     'news_link' => $articleUrl,
                     'img_link' => $this->getArticleImageLink($newsArticle),
                     'published_at' => $this->getArticlePublishedDate($newsArticle),
-                    'source_id' => $source->id
+                    'source_id' => $source->id,
+                    'author_id' => 1,
                 ];
 
-                if (count(array_filter($articleData)) !== count($articleData)) {
-                    continue;
-                }
+                if (count(array_filter($articleData)) !== count($articleData)) {continue;}
+
                 $article = Article::create($articleData);
             }
 

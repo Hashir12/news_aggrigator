@@ -43,7 +43,7 @@ class NewsService extends BaseService
     }
     public function getArticleAuthorName($newsArticle)
     {
-        return substr($newsArticle['author'], 0, 254);
+        return substr(Arr::get($newsArticle, 'author'), 0, 254);
     }
     public function getArticleTitleName($newsArticle)
     {
