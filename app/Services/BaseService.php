@@ -13,6 +13,7 @@ abstract class BaseService
     abstract protected function fetchNewsData($category);
     abstract protected function getNewsArticles($newsData);
     abstract protected function getArticleSourceName($newsArticle);
+    abstract protected function getArticleUrl($newsArticle);
     abstract protected function getArticleTitleName($newsArticle);
     abstract protected function getArticleAuthorName($newsArticle);
     abstract protected function getArticleDescription($newsArticle);
@@ -69,7 +70,7 @@ abstract class BaseService
                     'img_link' => $this->getArticleImageLink($newsArticle),
                     'published_at' => $this->getArticlePublishedDate($newsArticle),
                     'source_id' => $source->id,
-                    'author_id' => 1,
+                    'author_id' => $author_id,
                 ];
 
                 if (count(array_filter($articleData)) !== count($articleData)) {continue;}
