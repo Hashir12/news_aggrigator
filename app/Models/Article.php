@@ -36,6 +36,6 @@ class Article extends Model
 
     public function author()
     {
-        return $this->hasMany(Author::class);
+        return $this->belongsTo(Author::class);
     }
 }
