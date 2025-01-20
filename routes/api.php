@@ -14,10 +14,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
 
+    Route::get('/user-categories', [CategoryController::class, 'userFavoriteCategories']);
+    Route::post('/toggle-user_category/{id}',[CategoryController::class, 'toggleUserCategory']);
+    Route::get('/user-authors', [AuthorController::class, 'userFavoriteAuthors']);
+    Route::post('/toggle-user_author/{id}',[AuthorController::class, 'toggleUserAuthor']);
+    Route::get('/user-sources', [SourceController::class, 'userFavoriteSources']);
+    Route::post('/toggle-user-source/{id}',[SourceController::class, 'toggleUserSource']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-Route::get('test-route',[\App\Http\Controllers\NewsController::class,'fetchNews']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
