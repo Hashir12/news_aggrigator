@@ -69,7 +69,6 @@ class NewYorkTimesService extends BaseService
 
         return "https://www.nytimes.com/" . Arr::get($item, 'url');
     }
-
     public function getArticlePublishedDate($newsArticle)
     {
         return Arr::get($newsArticle, 'pub_date');

@@ -31,11 +31,11 @@ class Article extends Model
 
     public function source(): BelongsTo
     {
-        return $this->belongsTo(NewsSource::class);
+        return $this->belongsTo(Source::class);
     }
 
     public function author()
     {
-        return $this->belongsTo(Author::class);
+        return $this->hasMany(Author::class);
     }
 }

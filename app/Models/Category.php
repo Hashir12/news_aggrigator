@@ -10,4 +10,13 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'user_categories');
+    }
 }
