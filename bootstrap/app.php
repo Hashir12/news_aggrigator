@@ -13,9 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
-           'toggle-user-source',
-           'toggle-user_author',
-           'toggle-user_category'
+            'toggle-user-source/*',
+            'toggle-user_author/*',
+            'toggle-user_category/*'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

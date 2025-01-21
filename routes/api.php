@@ -15,9 +15,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::get('/user-categories', [CategoryController::class, 'userFavoriteCategories']);
-    Route::post('/toggle-user_category/{id}',[CategoryController::class, 'toggleUserCategory']);
+    Route::post('/toggle-user-category/{id}',[CategoryController::class, 'toggleUserCategory']);
     Route::get('/user-authors', [AuthorController::class, 'userFavoriteAuthors']);
-    Route::post('/toggle-user_author/{id}',[AuthorController::class, 'toggleUserAuthor']);
+    Route::post('/toggle-user-author/{id}',[AuthorController::class, 'toggleUserAuthor']);
     Route::get('/user-sources', [SourceController::class, 'userFavoriteSources']);
     Route::post('/toggle-user-source/{id}',[SourceController::class, 'toggleUserSource']);
 

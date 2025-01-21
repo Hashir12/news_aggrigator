@@ -32,4 +32,10 @@ class CategoryController extends Controller
 
         return ['data' => $data];
     }
+
+    public function toggleUserCategory($id)
+    {
+        Auth::user()->categories()->toggle([$id]);
+        return true;
+    }
 }
