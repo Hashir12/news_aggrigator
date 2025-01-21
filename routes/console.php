@@ -5,4 +5,4 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 use App\Console\Commands\GetNewsArticles;
 
-Schedule::command(GetNewsArticles::class)->everySecond()->runInBackground();
+Schedule::command(GetNewsArticles::class)->daily()->runInBackground();
