@@ -6,6 +6,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -35,7 +36,39 @@ class CategoryController extends Controller
 
     public function toggleUserCategory($id)
     {
-        Auth::user()->categories()->toggle([$id]);
+        $category = Category::where('id',$id)->first();
+        if (!$category) {
+            return ['error' => 'No category found.'];
+        }
+
+        $user = Auth::user();
+
+        $query = $user->categories();
+        $query->toggle([$id]);
+
+        if (!$category->parent_id) {
+            $isChecked = DB::table('user_categories')
+                ->where('user_id', $user->id)
+                ->where('category_id', $id)
+                ->exists();
+
+            $categoryChildIds = $category->categories()->pluck('id')->toArray();
+            $isChecked ? $query->syncWithoutDetaching($categoryChildIds) : $query->detach($categoryChildIds);
+        } else {
+            $parentCategory = $category->parentCategory;
+            $categoryChildIds = $parentCategory->categories()->pluck('id');
+            $checkedCount = DB::table('user_categories')
+                ->where('user_id', $user->id)
+                ->whereIn('category_id', $categoryChildIds)
+                ->count();
+
+            if ($checkedCount === $categoryChildIds->count()) {
+                $query->syncWithoutDetaching([$parentCategory->id]);
+            }
+            else {
+                $query->detach([$parentCategory->id]);
+            }
+        }
         return true;
     }
 }

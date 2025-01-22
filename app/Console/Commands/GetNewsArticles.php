@@ -29,7 +29,7 @@ class GetNewsArticles extends Command
      */
     public function handle()
     {
-        $categories = Category::whereNotNull('parent_id')->take(1)->get();
+        $categories = Category::whereNotNull('parent_id')->get();
         foreach ($categories as $category) {
             (new newYorkTimesService())->saveNewsData($category);
             (new newsService())->saveNewsData($category);

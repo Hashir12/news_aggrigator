@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PreferenceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
@@ -20,6 +21,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/toggle-user-author/{id}',[AuthorController::class, 'toggleUserAuthor']);
     Route::get('/user-sources', [SourceController::class, 'userFavoriteSources']);
     Route::post('/toggle-user-source/{id}',[SourceController::class, 'toggleUserSource']);
+
+    //saving bulk preferences
+    Route::post('/save-bulk-preferences',[PreferenceController::class, 'bulkSavePreferences']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
